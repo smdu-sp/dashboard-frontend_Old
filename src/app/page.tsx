@@ -1,10 +1,11 @@
-'use client';
-
 import Card from "@/components/card/Card";
 import Tecchart from "@/components/tecchart/Tecchart";
 import Header from "@/components/header/Header";
+import * as conexao from "../../utils/prisma.service";
 
 export default async function Home() {
+  const data = await conexao.chamadosMes();
+  console.log(data);
   return (
     <div>
       <Header />      
@@ -14,7 +15,7 @@ export default async function Home() {
         <Card titulo="Média de Avaliação do Mês" color="neutral"></Card>
         <Card titulo="Média de Avaliação Geral" color="danger"></Card>
       </div>
-      <Tecchart />
+      <Tecchart data={data} />
     </div>
   );
 }

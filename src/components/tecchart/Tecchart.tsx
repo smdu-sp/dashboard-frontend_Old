@@ -1,76 +1,41 @@
-import * as React from 'react';
+'use client';
 import { BarChart } from '@mui/x-charts/BarChart';
 
 const chartSetting = {
-  xAxis: [
+  yAxis: [
     {
       label: 'Quantidade de chamados solucionados',
     },
   ],
-  width: 500,
   height: 400,
+  // width: 500,
 };
-const dataset = [
-  {  
-    tickets: 152,
-    month: 'Jan',
-  },
-  {
-    tickets: 128,
-    month: 'Fev',
-  },
-  { 
-    tickets: 41,
-    month: 'Mar',
-  },
-  {    
-    tickets: 73,
-    month: 'Abr',
-  },
-  {  
-    tickets: 99,
-    month: 'Mai',
-  },
-  {
-    tickets: 144,
-    month: 'Jun',
-  },
-  {    
-    tickets: 319,
-    month: 'Jul',
-  },
-  {    
-    tickets: 249,
-    month: 'Ago',
-  },
-  {
-    tickets: 131,
-    month: 'Set',
-  },
-  {    
-    tickets: 55,
-    month: 'Out',
-  },
-  {   
-    tickets: 48,
-    month: 'Nov',
-  },
-  {  
-    tickets: 25,
-    month: 'Dez',
-  },
+
+const meses = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro',
 ];
 
-const valueFormatter = (value: number | null) => `${value}mm`;
-
-export default function HorizontalBars() {
-  const currentYear = new Date().getFullYear();
+export default function HorizontalBars({ data }: any) {
+  const currentMonth = meses[new Date().getMonth()];
+  data.sort((a: { name: string, tickets: number }, b: { name: string, tickets: number }) => b.tickets - a.tickets);
   return (
     <BarChart
-      dataset={dataset}
-      yAxis={[{ scaleType: 'band', dataKey: 'month' }]}
-      series={[{ dataKey: 'tickets', label: currentYear.toString(), valueFormatter }]}
-      layout="horizontal"
+      dataset={data}
+      sx={{ marginTop: '5px', marginLeft: '50px' }}
+      xAxis={[{ scaleType: 'band', dataKey: 'name' }]}
+      series={[{ dataKey: 'tickets', label: currentMonth.toString() }]}
+      layout="vertical"
       {...chartSetting}
     />
   );

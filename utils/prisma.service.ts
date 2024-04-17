@@ -1,9 +1,7 @@
-import { glpi_users } from "@prisma/client";
-import { PrismaClient } from "@prisma/client/extension";
+import { PrismaClient } from "@prisma/client";
 
-const prisma = PrismaClient();
-
-async function chamadosMes(): Promise<glpi_users[]> {
+async function chamadosMes(): Promise<{ name: string; tickets: number } []> {
+    const prisma = new PrismaClient();
     const data = await prisma.glpi_users.findMany({
       where: {
         is_active: true,
@@ -27,7 +25,7 @@ async function chamadosMes(): Promise<glpi_users[]> {
         }
       }
     });
-    return data.filter((item: any) => item.tickets.length > 0);
+    return data.filter((d) => d.tickets.length > 0).map((d) => ({ name: `${d.firstname} ${d.realname}`, tickets: d.tickets.length }));
 }
 
 export { chamadosMes }
