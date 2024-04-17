@@ -64,7 +64,7 @@ const dataset = [
 const valueFormatter = (value: number | null) => `${value}mm`;
 
 export default function HorizontalBars() {
-    const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
   return (
     <BarChart
       dataset={dataset}

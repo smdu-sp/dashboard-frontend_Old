@@ -1,13 +1,10 @@
-"use client";
+'use client';
 
 import Card from "@/components/card/Card";
-import BarChart from "@/components/barchart/barchart";
 import Tecchart from "@/components/tecchart/Tecchart";
-import BoxCard from "@/components/Box/Boxcard";
 import Header from "@/components/header/Header";
-import Grid from "@mui/joy/Grid";
 
-export default function Home() {
+export default async function Home() {
   return (
     <div>
       <Header />      
