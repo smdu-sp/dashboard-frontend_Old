@@ -1,28 +1,42 @@
-'use client'
+'use client';
+import { useRef, useEffect } from 'react';
+import { Chart } from 'chart.js/auto';
 
-import * as React from 'react';
-import { ChartContainer, BarPlot } from '@mui/x-charts';
-
-const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-const xLabels = [
-  'Page A',
-  'Page B',
-  'Page C',
-  'Page D',
-  'Page E',
-  'Page F',
-  'Page G',
-];
-
-export default function TinyBarChart() {
+export default function BarChart({ data, label = '', ...props }: { data: { name: string, tickets: number }[], label?: string }) {
+  const chartRef: any = useRef(null);
+  useEffect(() => {
+    if (chartRef.current){
+      if (chartRef.current.chart){
+        chartRef.current.chart.destroy();
+      }
+      const context = chartRef.current.getContext('2d');
+      const newChart = new Chart(context, {
+        type: 'bar',
+        data: {
+          labels: data.map((item) => item.name),
+          datasets: [
+            {
+              label,
+              data: data.map((item) => item.tickets),
+              backgroundColor: data.map((_) => `#${Math.floor(Math.random() * 16777215).toString(16)}`),
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+            x: {
+              type: 'category',
+            }
+          },
+        },
+      })
+      chartRef.current.chart = newChart;
+    }
+  }, [])
   return (
-    <ChartContainer
-      width={500}
-      height={300}
-      series={[{ data: uData, label: 'uv', type: 'bar' }]}
-      xAxis={[{ scaleType: 'band', data: xLabels }]}
-    >
-      <BarPlot />
-    </ChartContainer>
-  );
+    <canvas ref={chartRef} />
+  )
 }

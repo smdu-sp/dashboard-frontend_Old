@@ -28,7 +28,6 @@ const meses = [
 
 export default function HorizontalBars({ data }: any) {
   const currentMonth = meses[new Date().getMonth()];
-  data.sort((a: { name: string, tickets: number }, b: { name: string, tickets: number }) => b.tickets - a.tickets);
   return (
     <BarChart
       dataset={data}
