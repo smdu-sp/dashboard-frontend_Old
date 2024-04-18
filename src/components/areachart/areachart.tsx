@@ -1,9 +1,8 @@
 'use client';
 import { useRef, useEffect } from 'react';
 import { Chart } from 'chart.js/auto';
-import { Colors } from 'chart.js';
 
-export default function BarChart({ data, label = '', ...props }: { data: { name: string, tickets: number }[], label?: string }) {
+export default function AreaChart({ data, label = '', bar = false, ...props }: { data: { name: string, tickets: number }[], label?: string, bar?: boolean }) {
   const chartRef: any = useRef(null);
   useEffect(() => {
     if (chartRef.current){
@@ -12,24 +11,19 @@ export default function BarChart({ data, label = '', ...props }: { data: { name:
       }
       const context = chartRef.current.getContext('2d');
       const newChart = new Chart(context, {
-        type: 'bar',
+        type: 'line',
         data: {
           labels: data.map((item) => item.name),
           datasets: [
             {
               label,
               data: data.map((item) => item.tickets),
-              backgroundColor: [
-                '#2b3a67',
-                '#496A81',
-                '#66999B',
-                '#B3AF8F',
-                '#FFC482',
-              ]
+              fill: true,
             },
           ],
         },
         options: {
+          responsive: true,
           scales: {
             y: {
               beginAtZero: true,

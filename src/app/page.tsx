@@ -3,6 +3,7 @@ import Tecchart from "@/components/tecchart/Tecchart";
 import Header from "@/components/header/Header";
 import * as conexao from "../../utils/prisma.service";
 import BarChart from "@/components/barchart/barchart";
+import AreaChart from "@/components/areachart/areachart";
 
 const meses = [
   'Janeiro',
@@ -22,6 +23,7 @@ const meses = [
 export default async function Home() {
   const mes = await conexao.chamadosMes();
   const ano = await conexao.chamadosAno();
+  const mesAmes = await conexao.chamadosPorMes();
   mes.sort((a, b) => b.tickets - a.tickets);
   ano.sort((a, b) => b.tickets - a.tickets);
   return (
@@ -35,6 +37,7 @@ export default async function Home() {
       </div>
       <BarChart data={mes} label={meses[new Date().getMonth()]} />
       <BarChart data={ano} label={new Date().getFullYear().toString()} />
+      <AreaChart data={mesAmes} bar={true} label={'Últimos 12 meses'} />
     </div>
   );
 }
