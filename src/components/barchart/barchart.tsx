@@ -2,6 +2,9 @@
 
 import { useRef, useEffect } from 'react';
 import { Chart } from 'chart.js/auto';
+import ChartDataLabels from'chartjs-plugin-datalabels';
+
+
 
 
 export default function BarChart({ data, label = '', width = 200, height = 150 }: { data: { name: string, tickets: number }[], label?: string, width?: number, height?: number }) {
@@ -26,11 +29,21 @@ export default function BarChart({ data, label = '', width = 200, height = 150 }
                 '#66999B',
                 '#B3AF8F',
                 '#FFC482',
-              ]
+              ],
+              datalabels: {
+                color: 'black',
+                anchor: 'end',
+                align: 'top',
+                font: {
+                  weight: 'bold',
+                  size: 15,
+                }                               
+              }
             },
           ],
         },
-        options: {
+        plugins: [ChartDataLabels],
+        options: {          
           scales: {
             y: {
               beginAtZero: true,
