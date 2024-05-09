@@ -4,6 +4,7 @@ import * as conexao from "../../utils/prisma.service";
 import BarChart from "@/components/barchart/barchart";
 import AreaChart from "@/components/areachart/areachart";
 
+
 const meses = [
   "Janeiro",
   "Fevereiro",
@@ -24,6 +25,8 @@ export default async function Home() {
   const mes = await conexao.chamadosMes();
   const ano = await conexao.chamadosAno();
   const mesAmes = await conexao.chamadosPorMes();
+  const quantidadeAtribuidos = await conexao.chamadosAtribuidos();
+  const chamadosNovos = await conexao.chamadosNovos();
   mes.sort((a, b) => b.tickets - a.tickets);
   ano.sort((a, b) => b.tickets - a.tickets);
   return (
@@ -33,12 +36,12 @@ export default async function Home() {
         <Card
           titulo="Chamados Novos"
           color="primary"
-          valor={mes[0].tickets}
+          valor={chamadosNovos.quantidade}
         ></Card>
         <Card
           titulo="Chamados Atribuídos"
           color="success"
-          valor={mes[0].tickets}
+          valor={quantidadeAtribuidos.quantidade}
         ></Card>
         <Card
           titulo="Média de Avaliação do Mês"

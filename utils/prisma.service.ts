@@ -106,5 +106,38 @@ async function chamadosPorMes(): Promise<{ name: string; tickets: number } []> {
     }
     return(final);
 }
+async function chamadosAtribuidos(): Promise<{ quantidade: number }> {
+  const prisma = new PrismaClient();
+  try {
+    const data = await prisma.glpi_tickets.count({
+      where: {
+        status: 2
+      }
+    });
+    return { quantidade: data };
+  } catch (error) {
+    console.error('Erro ao buscar os tickets atribuídos:', error);
+    throw error;
+  } finally {
+    await prisma.$disconnect();
+  }
+}
 
-export { chamadosMes, chamadosAno, chamadosPorMes }
+async function chamadosNovos(): Promise<{ quantidade: number }> {
+  const prisma = new PrismaClient();
+  try {
+    const data = await prisma.glpi_tickets.count({
+      where: {
+        status: 1
+      }
+    });
+    return { quantidade: data };
+  } catch (error) {
+    console.error('Erro ao buscar os tickets atribuídos:', error);
+    throw error;
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export { chamadosMes, chamadosAno, chamadosPorMes, chamadosAtribuidos, chamadosNovos };
