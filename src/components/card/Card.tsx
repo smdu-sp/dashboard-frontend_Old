@@ -17,8 +17,8 @@ export default function CardDashboard(props: any) {
       }}>
       <CardContent orientation="horizontal">        
         <CardContent>
-          <Typography level="body-lg">{props.titulo}</Typography>
-          <Typography level="h1">0</Typography>
+          <Typography level="body-lg">{props.titulo} {props.ano}</Typography>
+          <Typography level="h1">{props.valor}</Typography>
         </CardContent>
       </CardContent>      
     </Card>

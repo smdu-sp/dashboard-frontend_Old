@@ -1,26 +1,26 @@
 import Card from "@/components/card/Card";
-import Tecchart from "@/components/tecchart/Tecchart";
 import Header from "@/components/header/Header";
 import * as conexao from "../../utils/prisma.service";
 import BarChart from "@/components/barchart/barchart";
 import AreaChart from "@/components/areachart/areachart";
 
 const meses = [
-  'Janeiro',
-  'Fevereiro',
-  'Março',
-  'Abril',
-  'Maio',
-  'Junho',
-  'Julho',
-  'Agosto',
-  'Setembro',
-  'Outubro',
-  'Novembro',
-  'Dezembro',
+  "Janeiro",
+  "Fevereiro",
+  "Março",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
+  "Dezembro",
 ];
 
 export default async function Home() {
+  const anoatual = new Date().getFullYear();
   const mes = await conexao.chamadosMes();
   const ano = await conexao.chamadosAno();
   const mesAmes = await conexao.chamadosPorMes();
@@ -28,16 +28,46 @@ export default async function Home() {
   ano.sort((a, b) => b.tickets - a.tickets);
   return (
     <div>
-      <Header />      
+      <Header />
       <div className="lg:flex">
-        <Card titulo="Chamados Novos" color="primary"></Card>
-        <Card titulo="Chamados Atribuídos" color="success"></Card>
-        <Card titulo="Média de Avaliação do Mês" color="neutral"></Card>
-        <Card titulo="Média de Avaliação Geral" color="danger"></Card>
+        <Card
+          titulo="Chamados Novos"
+          color="primary"
+          valor={mes[0].tickets}
+        ></Card>
+        <Card
+          titulo="Chamados Atribuídos"
+          color="success"
+          valor={mes[0].tickets}
+        ></Card>
+        <Card
+          titulo="Média de Avaliação do Mês"
+          color="neutral"
+          valor="7.5"
+        ></Card>
+        <Card
+          titulo="Média de Avaliação"
+          ano={anoatual}
+          color="danger"
+          valor="8.5"
+        ></Card>
+        <Card
+          titulo="Média de Avaliação Geral"
+          color="warning"
+          valor="9.5"
+        ></Card>
       </div>
-      <BarChart data={mes} label={meses[new Date().getMonth()]} />
-      <BarChart data={ano} label={new Date().getFullYear().toString()} />
-      <AreaChart data={mesAmes} bar={true} label={'Últimos 12 meses'} />
+      <div style={{ justifyContent: 'center' }}>
+        <div style={{ width: '55%', height: '1000px' }}>
+          <BarChart data={mes} label={meses[new Date().getMonth()]} />
+        </div>
+        <div style={{ width: '50%', height: '1000px' }}>
+          <BarChart data={ano} label={new Date().getFullYear().toString()} />
+        </div>
+      </div>
+      <div style={{ width: '50%', height: '1000px' }}>
+        <AreaChart data={mesAmes} bar={true} label={"Últimos 12 meses"} />
+      </div>
     </div>
   );
 }

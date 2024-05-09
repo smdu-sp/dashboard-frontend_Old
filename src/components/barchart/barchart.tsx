@@ -1,9 +1,10 @@
-'use client';
+"use client"
+
 import { useRef, useEffect } from 'react';
 import { Chart } from 'chart.js/auto';
-import { Colors } from 'chart.js';
 
-export default function BarChart({ data, label = '', ...props }: { data: { name: string, tickets: number }[], label?: string }) {
+
+export default function BarChart({ data, label = '', width = 200, height = 150 }: { data: { name: string, tickets: number }[], label?: string, width?: number, height?: number }) {
   const chartRef: any = useRef(null);
   useEffect(() => {
     if (chartRef.current){
@@ -44,6 +45,6 @@ export default function BarChart({ data, label = '', ...props }: { data: { name:
     }
   }, [])
   return (
-    <canvas ref={chartRef} />
+    <canvas ref={chartRef} width={width} height={height} style={{ maxWidth: '100%', height: '50%' }} />
   )
 }
